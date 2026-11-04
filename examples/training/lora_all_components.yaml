@@ -1,0 +1,61 @@
+### model
+model_name_or_path: /path/to/Qwen3-Omni-30B-A3B-Instruct
+trust_remote_code: true
+use_speechlmm_wrapper: true
+
+### method — component LoRA on language model + audio encoder + audio adapters (mixed ranks)
+stage: sft
+do_train: true
+finetuning_type: lora
+freeze_vision_tower: true
+freeze_talker: true
+freeze_code2wav: true
+freeze_code_predictor: true
+deepspeed: examples/deepspeed/ds_z3_config.json
+gradient_checkpointing_all_layers: true
+
+### language model (Thinker) attention + expert LoRA
+lora_language_model_scope: attention_and_experts
+lora_language_model_rank: 16
+lora_language_model_alpha: 32
+lora_language_model_experts_rank: 4
+lora_language_model_experts_alpha: 8
+
+### audio encoder LoRA
+lora_audio_encoder: true
+lora_audio_encoder_rank: 8
+lora_audio_encoder_alpha: 16
+
+### audio adapters LoRA (ln_post auto-added to trainable_module_paths)
+lora_audio_adapters: true
+lora_audio_adapters_rank: 4
+lora_audio_adapters_alpha: 8
+
+### dataset
+dataset: dummy_audio_sft_train
+dataset_dir: data
+template: speechlmm
+cutoff_len: 512
+preprocessing_num_workers: 1
+dataloader_num_workers: 1
+dataloader_drop_last: false
+
+### output
+output_dir: output/lora_all_components
+logging_steps: 1
+save_steps: 500
+plot_loss: false
+overwrite_output_dir: true
+save_only_model: false
+report_to: none
+run_name: lora-all-components
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+max_steps: 5
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+warmup_steps: 1
+bf16: true
+ddp_timeout: 180000000

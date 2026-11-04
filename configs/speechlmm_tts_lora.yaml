@@ -1,0 +1,50 @@
+### model
+model_name_or_path: Qwen/Qwen3-Omni-30B-A3B-Instruct
+trust_remote_code: true
+use_speechlmm_wrapper: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 16
+lora_alpha: 32
+lora_talker: true
+freeze_vision_tower: true
+freeze_language_model: true
+freeze_talker: false
+freeze_code2wav: true
+freeze_code_predictor: true
+deepspeed: llamafactory/examples/deepspeed/ds_z3_config.json
+gradient_checkpointing_all_layers: true
+
+### dataset
+dataset_dir: data/libritts_tts
+dataset: libritts_train_clean_100
+# JSON + dataset_info.json must be synced from S3 before training:
+#   aws s3 sync s3://translated/speechlmm/libritts_tts/ data/libritts_tts/ --no-verify-ssl
+template: speechlmm
+cutoff_len: 2048
+preprocessing_num_workers: 4
+dataloader_num_workers: 2
+
+### output
+output_dir: saves/speechlmm/tts-lora
+logging_steps: 10
+save_steps: 500
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: wandb
+run_name: speechlmm-tts-lora
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 4
+learning_rate: 2.0e-5
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_steps: 50
+bf16: true
+ddp_timeout: 180000000
+max_grad_norm: 1.0

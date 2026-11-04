@@ -1,0 +1,58 @@
+### model — tiny debug Qwen3-Omni wrapped as SpeechLMM (~20M params)
+# 1. First create the debug model:
+#      python scripts/debug/create_debug_model.py --output_dir models/speechlmm_debug_model
+# 2. Then run training with this config.
+model_name_or_path: models/speechlmm_debug_model
+use_speechlmm_wrapper: true
+
+### method - train only audio adapters (proj1, proj2, ln_post)
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_vision_tower: true
+freeze_audio_encoder: true
+freeze_audio_adapters: false
+freeze_language_model: true
+freeze_talker: true
+freeze_code2wav: true
+freeze_code_predictor: true
+deepspeed: examples/deepspeed/ds_z3_config.json
+gradient_checkpointing_all_layers: true
+
+### dataset
+dataset_dir: /scratch_data/speechlmm-v2/data/mumospee
+dataset: voxpopuli_asr_train,eurospeech_asr_train
+template: qwen3_omni_nothink
+cutoff_len: 512
+max_samples: 100
+preprocessing_num_workers: 2
+dataloader_num_workers: 2
+mix_strategy: concat
+
+### eval
+do_eval: true
+eval_dataset: voxpopuli_asr_eval,eurospeech_asr_eval
+eval_on_each_dataset: true
+eval_steps: 10
+per_device_eval_batch_size: 4
+compute_accuracy: true
+
+### output
+output_dir: saves/speechlmm/debug
+logging_steps: 1
+save_steps: 10
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: none
+run_name: speechlmm-debug
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 1
+learning_rate: 1.0e-4
+num_train_epochs: 2.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.02
+bf16: true
+ddp_timeout: 180000000

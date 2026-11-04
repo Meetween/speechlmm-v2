@@ -1,0 +1,14 @@
+{
+  "asr": ["Transcribe the following speech in {lang_out}."],
+  "st": ["Translate the following speech from {lang_in} to {lang_out}."],
+  "tts": ["Read the following text aloud in {lang_out}."],
+  "s2st": ["Translate the following speech from {lang_in} to {lang_out}."],
+  "mt": ["Translate the following text from {lang_in} to {lang_out}."],
+  "slu": ["Extract the intent and slots from the following speech."],
+  "ssum": ["Summarize the following speech."],
+  "tsum": ["Summarize the following text."],
+  "sqa": ["Answer the following question based on the audio."],
+  "achap": ["Identify chapter boundaries and titles in the following audio."],
+  "lipread": ["Transcribe the speech from the video."],
+  "avspeakd": ["Identify speakers and their speaking times in the video."]
+}

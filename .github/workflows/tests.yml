@@ -1,0 +1,40 @@
+name: tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+          token: ${{ secrets.SUBMODULE_TOKEN || github.token }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install CPU dependencies
+        run: |
+          uv venv
+          uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+          uv pip install -e ./llamafactory
+          uv pip install pyarrow pandas
+          uv pip install -e ".[test]" --no-deps
+
+      - name: Run CPU unit tests
+        run: |
+          uv run --no-sync python -m unittest discover -s tests -v

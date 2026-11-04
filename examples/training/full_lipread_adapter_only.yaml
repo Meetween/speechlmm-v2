@@ -1,0 +1,50 @@
+### model
+model_name_or_path: /path/to/Qwen3-Omni-30B-A3B-Instruct
+trust_remote_code: true
+use_speechlmm_wrapper: true
+
+### method — full fine-tuning on lipread adapter only (frozen encoder)
+### trainable_module_paths is auto-configured from freeze_lipread_adapter + freeze_lipread_encoder
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_audio_encoder: true
+freeze_audio_adapters: true
+freeze_vision_tower: true
+freeze_lipread_encoder: true
+freeze_lipread_adapter: false
+freeze_language_model: true
+freeze_talker: true
+freeze_code2wav: true
+freeze_code_predictor: true
+deepspeed: examples/deepspeed/ds_z3_config.json
+gradient_checkpointing_all_layers: true
+
+### dataset
+dataset: dummy_audio_sft_train
+dataset_dir: data
+template: speechlmm
+cutoff_len: 512
+preprocessing_num_workers: 1
+dataloader_num_workers: 1
+dataloader_drop_last: false
+
+### output
+output_dir: output/full_lipread_adapter_only
+logging_steps: 1
+save_steps: 500
+plot_loss: false
+overwrite_output_dir: true
+save_only_model: false
+report_to: none
+run_name: full-lipread-adapter-only
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+max_steps: 5
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+warmup_steps: 1
+bf16: true
+ddp_timeout: 180000000

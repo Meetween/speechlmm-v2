@@ -1,0 +1,26 @@
+export UV_CACHE_DIR="$SCRATCH/.cache/uv_cache"
+
+UV_VENV_PATH=/path/to/venv # Change it with your env
+
+module load CUDA/12.8.0
+
+uv venv $UV_VENV_PATH --python=3.12 --seed
+
+source $UV_VENV_PATH/bin/activate
+
+uv pip install -e .
+
+mkdir local_packages
+git clone https://github.com/vllm-project/vllm local_packages/vllm
+cd local_packages/vllm
+git checkout v0.16.0
+export VLLM_PRECOMPILED_WHEEL_COMMIT=$(git rev-parse HEAD~1)
+export VLLM_USE_PRECOMPILED=1
+uv pip install -e .
+cd ../..
+
+git clone https://github.com/vllm-project/vllm-omni.git local_packages/vllm-omni
+cd local_packages/vllm-omni
+git checkout 75770c93097ebfa33f16c0722e2037a93c6b9f3b
+uv pip install -e .
+cd ../..

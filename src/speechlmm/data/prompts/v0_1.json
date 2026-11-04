@@ -1,0 +1,96 @@
+{
+  "asr": [
+    "Transcribe the {lang_in} {format_in} input.",
+    "The transcription must be written in {lang_in}.",
+    "Input: {input}"
+  ],
+  "st": [
+    "Translate the {lang_in} {format_in} input into {lang_out} {format_out}.",
+    "Preserve the meaning of the original input.",
+    "Input: {input}"
+  ],
+  "tts": [
+    "Generate {lang_out} {format_out} from the {lang_in} {format_in} input.",
+    "Preserve the content of the original input.",
+    "Input: {input}"
+  ],
+  "s2st": [
+    "Translate the {lang_in} {format_in} input into {lang_out} {format_out}.",
+    "Preserve the meaning of the original input.",
+    "Input: {input}"
+  ],
+  "mt": [
+    "Translate the {lang_in} {format_in} input into {lang_out} {format_out}.",
+    "Preserve the meaning of the original input.",
+    "Input: {input}"
+  ],
+  "slu-list": [
+    "Given the {lang_in} {format_in}, identify the speaker's intent.",
+    "Choose exactly one intent from the following intent list.",
+    "If the intent is not present in the list, reply with {no_answer}.",
+    "Input: {input}",
+    "Intent list: {intents}"
+  ],
+  "slu": [
+    "Given the {lang_in} {format_in}, identify the speaker's intent.",
+    "Input: {input}"
+  ],
+  "ssum": [
+    "Summarize the {lang_in} {format_in} input.",
+    "The summary must be written in {lang_out}.",
+    "Input: {input}"
+  ],
+  "tsum": [
+    "Summarize the {lang_in} {format_in} input.",
+    "The summary must be written in {lang_out}.",
+    "Input: {input}"
+  ],
+  "sqa-multiple": [
+    "Given the {lang_in} {format_in} input, answer the {lang_qst} {format_qst} question.",
+    "Choose exactly one answer from the following options.",
+    "Input: {input}",
+    "Question: {question}",
+    "Options:\n{options}"
+  ],
+  "sqa-extractive": [
+    "Given the {lang_in} {format_in} input, answer the {lang_qst} {format_qst} question.",
+    "Extract the exact words from the input that answer the question.",
+    "Do not paraphrase, modify, or add any words.",
+    "The answer must be written in {lang_out}.",
+    "If the answer is not present in the input, reply with 'unanswerable'.",
+    "Input: {input}",
+    "Question: {question}"
+  ],
+  "sqa-abstractive": [
+    "Given the {lang_in} {format_in} input, answer the {lang_qst} {format_qst} question.",
+    "Base the answer only on the information contained in the input.",
+    "The answer must be written in {lang_out}.",
+    "Input: {input}",
+    "Question: {question}"
+  ],
+  "sqa": [
+    "Given the {lang_in} {format_in} input, answer the {lang_qst} {format_qst} question.",
+    "Base the answer only on the information contained in the input.",
+    "The answer must be written in {lang_out}.",
+    "Input: {input}",
+    "Question: {question}"
+  ],
+  "achap": [
+    "Given the {lang_in} {format_in} input, identify the chapters.",
+    "For each chapter, return its start time and title in this format: 'start_time - chapter_title'.",
+    "Chapter titles must be written in {lang_out}.",
+    "Return the chapters in chronological order.",
+    "Input: {input}"
+  ],
+  "lipread": [
+    "Transcribe the speech visible in the {lang_in} {format_in} input.",
+    "The transcription must be written in {lang_in}.",
+    "Input: {input}"
+  ],
+  "avspeakd": [
+    "Given the {lang_in} {format_in} input, identify all speakers.",
+    "For each speaking segment, return the speaker ID and start/end times in this format: 'speaker_id: start_time - end_time'.",
+    "Return all speaking segments in chronological order.",
+    "Input: {input}"
+  ]
+}

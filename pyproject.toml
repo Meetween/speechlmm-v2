@@ -1,0 +1,77 @@
+[build-system]
+requires = ["uv_build>=0.10.0,<0.11.0"]
+build-backend = "uv_build"
+
+[project]
+name = "speechlmm-v2"
+version = "0.1.0"
+description = "SpeechLMM-v2: A multimodal and multilingual foundation model supporting audio, video and text"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "See LICENSE file"}
+authors = [
+    {name = "SpeechLMM-v2 Contributors"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "torch==2.10.0",
+    "torchaudio==2.10.0",
+    "torchcodec==0.10.0",
+    "torchdata==0.10.0",
+    "torchvision==0.25.0",
+    "llamafactory",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.0",
+]
+deepspeed = [
+    "deepspeed>=0.10.0,<=0.18.4",
+]
+logging = [
+    "wandb",
+    "tensorboard",
+]
+test = [
+    "pyarrow",
+    "pandas",
+]
+
+[project.urls]
+Homepage = "https://github.com/Meetween/speechlmm-v2"
+Repository = "https://github.com/Meetween/speechlmm-v2"
+Issues = "https://github.com/Meetween/speechlmm-v2/issues"
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+torchvision = [{ index = "pytorch-cu128" }]
+torchaudio = [{ index = "pytorch-cu128" }]
+torchcodec = { index = "pytorch-cu128" }
+
+llamafactory = { path = "llamafactory/", editable = true }
+
+[tool.uv.build-backend]
+module-name = "speechlmm"
+module-root = "src/"
+
+[tool.uv.extra-build-dependencies]
+torchcodec = ["torch"]
+
+[tool.black]
+line-length = 130
+target-version = ['py312']
+extend-exclude = ".*llamafactory/.*"

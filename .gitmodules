@@ -1,0 +1,4 @@
+[submodule "llamafactory"]
+	path = llamafactory
+	url = https://github.com/Meetween/speechlmm-llamafactory
+	branch = main

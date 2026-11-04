@@ -1,0 +1,3 @@
+{"sample_id": "prova0", "task": ["st"], "split": "test", "source_dataset": "PROVA", "license": "unknown", "text_input": "Trascrivi questo audio.", "audio_input_path":"audio_0.wav", "language_text_input": "de", "language_text_output": "it"}
+{"sample_id": "prova1", "task": ["st"], "split": "test", "source_dataset": "PROVA", "license": "unknown", "text_input": "Trascrivi questo audio.", "audio_input_path":"audio_1.wav", "language_text_input": "fr", "language_text_output": "it"}
+{"sample_id": "prova2", "task": ["st"], "split": "test", "source_dataset": "PROVA", "license": "unknown", "text_input": "Trascrivi questo audio.", "audio_input_path":"audio_2.wav", "language_text_input": "en", "language_text_output": "it"}

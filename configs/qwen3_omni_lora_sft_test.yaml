@@ -1,0 +1,40 @@
+### model
+model_name_or_path: Qwen/Qwen3-Omni-30B-A3B-Instruct
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 8
+lora_target: all
+deepspeed: examples/deepspeed/ds_z3_config.json
+gradient_checkpointing_all_layers: true
+
+### dataset
+dataset: mllm_audio_demo
+template: qwen3_omni_nothink
+cutoff_len: 1024
+max_samples: 10
+preprocessing_num_workers: 4
+dataloader_num_workers: 2
+
+### output
+output_dir: saves/qwen3-omni/lora/sft-test
+logging_steps: 1
+save_steps: 50
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: wandb
+run_name: qwen3-omni-sft-test
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+learning_rate: 1.0e-4
+num_train_epochs: 2.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000

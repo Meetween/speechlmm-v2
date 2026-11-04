@@ -1,0 +1,59 @@
+### model
+model_name_or_path: /external_data/speechlmm-v2/.cache/huggingface/hub/models--Qwen--Qwen3-Omni-30B-A3B-Instruct/snapshots/26291f793822fb6be9555850f06dfe95f2d7e695
+trust_remote_code: true
+use_speechlmm_wrapper: true
+
+### method - train full lipread encoder + adapter
+stage: sft
+do_train: true
+finetuning_type: full
+freeze_vision_tower: true
+freeze_audio_encoder: true
+freeze_audio_adapters: true
+freeze_lipread_encoder: false
+freeze_lipread_adapter: false
+freeze_language_model: true
+freeze_talker: true
+freeze_code2wav: true
+freeze_code_predictor: true
+deepspeed: examples/deepspeed/ds_z3_config.json
+gradient_checkpointing_all_layers: true
+
+### dataset
+dataset_dir: /scratch_data/speechlmm-v2/data/mumospee
+dataset: lrs2_train
+template: speechlmm
+cutoff_len: 1024
+preprocessing_num_workers: 2
+dataloader_num_workers: 2
+mix_strategy: concat
+
+### eval
+do_eval: true
+eval_dataset: lrs2_eval
+eval_on_each_dataset: true
+eval_steps: 100
+per_device_eval_batch_size: 4
+compute_accuracy: true
+
+### output
+output_dir: /scratch_data/speechlmm-v2/saves/qwen3-omni/full/lipread_encoder_full
+logging_steps: 1
+save_steps: 50
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to:
+  - wandb
+  - tensorboard
+run_name: qwen3-omni-lipread-encoder-full
+
+### train
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-5
+num_train_epochs: 10.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.02
+bf16: true
+ddp_timeout: 180000000
